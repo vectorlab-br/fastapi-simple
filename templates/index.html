@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FastAPI Template Example</title>
+    <link href="{{ url_for('static', path='/styles.css') }}" rel="stylesheet">
+</head>
+<body>
+    <h1 class="message">{{ message }}</h1>
+    <h2 class="message">Cemiterio: {{ cemiterio }}</h1>
+    <!-- <p>This is a simple HTML template rendered by FastAPI.</p> -->
+    <h2>{{ timeinfo }} </h2>
+    <div class="container">
+      <img src="data:image/png;base64,{{ qr_code }}" alt="QR Code with UUID">
+      <p class="uuid">{{ uuid }}</p>
+      <button onclick="location.reload()">Generate New UUID QR Code</button>
+    </div>
+</body>
+</html>
