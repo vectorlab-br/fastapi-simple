@@ -3,3 +3,4 @@ uvicorn==0.30.6
 Jinja2==3.1.4
 qrcode==7.4.2
 pillow==10.4.0
+python-dotenv==1.0.1
