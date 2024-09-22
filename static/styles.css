@@ -17,11 +17,12 @@ h1.message {
 }
 
 h2.message {
-  color: #e5ff86;
+  color: #52d7e0;
 }
 
-h3 {
+h4 {
   color: #bda000;
+  font-size: 1.0em;
 }
 
 p {
