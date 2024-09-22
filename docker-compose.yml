@@ -1,0 +1,16 @@
+version: "3.8"
+
+services:
+  app:
+    container_name: app
+    image: vectorlab/fastapi-test-app:latest
+    # build: .
+    command: bash -c "uvicorn main:app --host 0.0.0.0 --port 5000 --reload"
+    # volumes:
+    #   - .:/app
+    ports:
+      - 5000:5000
+    environment:
+      - USE_HTTPS=0
+    restart: always
+
