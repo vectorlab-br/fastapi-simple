@@ -4,7 +4,8 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  margin: 0;
+  margin: 10px;
+  padding: 1em;
   background-color: #090414;
 }
 
@@ -37,12 +38,18 @@ p.uuid {
   text-align: center;
 }
 
+div.container {
+  /* background-color: #bda000; */
+  display: flexbox;
+  flex-direction: column;
+}
+
 img {
+  display: flexbox;
   margin: 20px 0;
   height: 250px;
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
-  
 }
 
 button.new_uuid {
