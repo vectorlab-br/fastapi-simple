@@ -2,6 +2,7 @@ from fastapi import FastAPI, Request
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import StreamingResponse
+from starlette.datastructures import URL
 import uvicorn
 import qrcode
 import io
@@ -10,6 +11,14 @@ import base64
 import random
 
 import datetime
+
+def https_url_for(request: Request, name: str, **path_params: any) -> str:
+    http_url = request.url_for(name, **path_params)
+    print(f">>> URL Return: {http_url}, type: {type(http_url)}")
+    new_url = http_url.replace(scheme="https")
+    print(f">>> New URL Return: {new_url}")
+    # Replace 'http' with 'https'
+    return new_url
 
 cemiterios = ['Parque das flores', 'Bosque da saudade', 'Eterno descanso', 'Para sempre saudosos', 'Campos eternos']
 
@@ -20,6 +29,7 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 
 # Initialize Jinja2 templates
 templates = Jinja2Templates(directory="templates")
+templates.env.globals["https_url_for"] = https_url_for
 
 @app.get("/")
 async def read_root(request: Request):
