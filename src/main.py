@@ -9,27 +9,47 @@ import io
 import uuid
 import base64
 import random
+from dotenv import load_dotenv
+import os
 
 import datetime
 
+load_dotenv(override=True)
+use_htpps = os.getenv('USE_HTTPS')
+
+def str_to_bool(value):
+    return value.lower() in ('true', 't', 'yes', 'y', '1')
+
 def https_url_for(request: Request, name: str, **path_params: any) -> str:
     http_url = request.url_for(name, **path_params)
-    print(f">>> URL Return: {http_url}, type: {type(http_url)}")
-    new_url = http_url.replace(scheme="https")
-    print(f">>> New URL Return: {new_url}")
-    # Replace 'http' with 'https'
+    print(f"Should use https: {use_htpps}, var type: {type(use_htpps)}")
+    if str_to_bool(use_htpps):
+        new_url = http_url.replace(scheme="https")
+        print(f"::: URL Return: {new_url}, type: {type(new_url)}")
+    else:
+        new_url = http_url.replace(scheme="http")
+        print(f"]]] URL Return: {new_url}, type: {type(new_url)}")
+
     return new_url
 
 cemiterios = ['Parque das flores', 'Bosque da saudade', 'Eterno descanso', 'Para sempre saudosos', 'Campos eternos']
 
 app = FastAPI()
 
+
 # Mount a static directory
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 # Initialize Jinja2 templates
 templates = Jinja2Templates(directory="templates")
-templates.env.globals["https_url_for"] = https_url_for
+# if use_htpps:
+#     print(">>> Using https_url_for <<<")
+templates.env.globals["url_for"] = https_url_for
+# else:
+#     print(">>> Using default url_for <<<")
+
+# else:
+#     templates.env.globals["https_url_for"] = url_for
 
 @app.get("/")
 async def read_root(request: Request):
