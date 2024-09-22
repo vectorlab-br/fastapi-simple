@@ -17,6 +17,11 @@ import datetime
 load_dotenv(override=True)
 use_htpps = os.getenv('USE_HTTPS')
 
+def load_names(file_name: str) -> list[str]:
+    with open(file_name, '+r') as f:
+        return f.readlines()
+
+
 def str_to_bool(value):
     return value.lower() in ('true', 't', 'yes', 'y', '1')
 
@@ -32,7 +37,7 @@ def https_url_for(request: Request, name: str, **path_params: any) -> str:
 
     return new_url
 
-cemiterios = ['Parque das flores', 'Bosque da saudade', 'Eterno descanso', 'Para sempre saudosos', 'Campos eternos']
+cemiterios = load_names('./nomes.txt')
 
 app = FastAPI()
 
@@ -70,7 +75,8 @@ def generate_qr_code():
     # Generate QR code with current timestamp
     qr = qrcode.QRCode(version=1, box_size=10, border=3.5)
     # value = str(datetime.datetime.now()).split('.')[0]
-    random_uuid = "http://www.eternamente.digital/" + str(uuid.uuid4())
+    new_uuid = uuid.uuid4()
+    random_uuid = "http://www.eternamente.digital/" + str(new_uuid)
     qr.add_data(random_uuid)
     qr.make(fit=True)
     img = qr.make_image(fill_color="black", back_color="#DDD")
