@@ -61,6 +61,7 @@ templates.env.globals["url_for"] = https_url_for
 async def read_root(request: Request):
     value = str(datetime.datetime.now()).split('.')[0]
     selected = random.choice(cemiterios)
+    pessoa = random.choice(pessoas)
     cem_index = 999
     if selected in cemiterios:
         cem_index = cemiterios.index(selected)
@@ -70,7 +71,7 @@ async def read_root(request: Request):
     qr_code, uuid_value = generate_qr_code(cem_index)
     return templates.TemplateResponse("index.html", {
         "request": request,
-        "message": "Hello, qrCode!", 
+        "message": pessoa, 
         "timeinfo": value,
         "cemiterio": selected,
         "qr_code": qr_code,
