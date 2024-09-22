@@ -9,3 +9,6 @@ docker push vectorlab/fastapi-test-app
 
 # To run
 docker run -d -p 5000:5000 vectorlab/fastapi-test-app
+
+# To run with compose in watch mode
+docker compose watch
