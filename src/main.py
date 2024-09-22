@@ -18,8 +18,8 @@ load_dotenv(override=True)
 use_htpps = os.getenv('USE_HTTPS')
 
 def load_names(file_name: str) -> list[str]:
-    with open(file_name, '+r') as f:
-        return f.readlines()
+    with open(file_name, '+r', encoding='utf-8') as f:
+        return [x.strip() for x in f.readlines()]
 
 
 def str_to_bool(value):
@@ -30,10 +30,10 @@ def https_url_for(request: Request, name: str, **path_params: any) -> str:
     print(f"Should use https: {use_htpps}, var type: {type(use_htpps)}")
     if str_to_bool(use_htpps):
         new_url = http_url.replace(scheme="https")
-        print(f"::: URL Return: {new_url}, type: {type(new_url)}")
+        # print(f"::: URL Return: {new_url}, type: {type(new_url)}")
     else:
         new_url = http_url.replace(scheme="http")
-        print(f"]]] URL Return: {new_url}, type: {type(new_url)}")
+        # print(f"]]] URL Return: {new_url}, type: {type(new_url)}")
 
     return new_url
 
@@ -59,24 +59,31 @@ templates.env.globals["url_for"] = https_url_for
 @app.get("/")
 async def read_root(request: Request):
     value = str(datetime.datetime.now()).split('.')[0]
-    cemiterio = random.choice(cemiterios),
-    qr_code, uuid_value = generate_qr_code()
+    selected = random.choice(cemiterios)
+    cem_index = 999
+    if selected in cemiterios:
+        cem_index = cemiterios.index(selected)
+    else:
+        print(f'||| [{selected}] NOT IN LIST |||')
+
+    qr_code, uuid_value = generate_qr_code(cem_index)
     return templates.TemplateResponse("index.html", {
         "request": request,
         "message": "Hello, qrCode!", 
         "timeinfo": value,
-        "cemiterio": list(cemiterio)[0],
+        "cemiterio": selected,
         "qr_code": qr_code,
         "uuid": uuid_value.split('.digital/')[1]
     })
 
 # @app.get("/qr")
-def generate_qr_code():
+def generate_qr_code(cem_index=999):
     # Generate QR code with current timestamp
     qr = qrcode.QRCode(version=1, box_size=10, border=3.5)
     # value = str(datetime.datetime.now()).split('.')[0]
-    new_uuid = uuid.uuid4()
-    random_uuid = "http://www.eternamente.digital/" + str(new_uuid)
+    new_uuid = str(uuid.uuid4()).split('-')
+    new_uuid[1] = f"{cem_index:04x}"
+    random_uuid = "http://www.eternamente.digital/" + "-".join(new_uuid)
     qr.add_data(random_uuid)
     qr.make(fit=True)
     img = qr.make_image(fill_color="black", back_color="#DDD")
