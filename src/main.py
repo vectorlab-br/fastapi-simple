@@ -37,8 +37,8 @@ def https_url_for(request: Request, name: str, **path_params: any) -> str:
 
     return new_url
 
-cemiterios = load_names('./nomes_cemiterios.txt')
-pessoas = load_names('./nomes_pessoas.txt')
+cemiterios = load_names('./db/nomes_cemiterios.txt')
+pessoas = load_names('./db/nomes_pessoas.txt')
 
 app = FastAPI()
 
