@@ -11,7 +11,8 @@ ENV PYTHONUNBUFFERED=1
 ENV USE_HTTPS=0
 
 COPY requirements.txt .
-COPY nomes.txt .
+COPY nomes_cemiterios.txt .
+COPY nomes_pessoas.txt .
 RUN python -m pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 
