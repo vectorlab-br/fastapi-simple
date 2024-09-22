@@ -88,7 +88,7 @@ def generate_qr_code(cem_index=999):
     random_uuid = "http://www.eternamente.digital/" + "-".join(new_uuid)
     qr.add_data(random_uuid)
     qr.make(fit=True)
-    img = qr.make_image(fill_color="black", back_color="#DDD")
+    img = qr.make_image(fill_color="black", back_color="#FFF")
     
     # Save image to bytes buffer
     buf = io.BytesIO()

@@ -5,18 +5,22 @@ body {
   align-items: center;
   height: 100vh;
   margin: 0;
-  background-color: #c7c7c7;
+  background-color: #090414;
 }
 
 h1.message {
-  color: #1d1d1d;
+  color: #e5ff86;
   font-size: 2.5em;
   /* height: auto; */
   margin: 0%;
 }
 
-h2 {
-  color: #3d5204;
+h2.message {
+  color: #e5ff86;
+}
+
+h3 {
+  color: #bda000;
 }
 
 p {
@@ -24,9 +28,9 @@ p {
 }
 
 p.uuid {
-  font-size: 1.5em;
+  font-size: 1.25em;
   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-  color: #05061c;
+  color: #d048fa;
 }
 
 .container {
@@ -41,11 +45,13 @@ img {
   
 }
 
-button {
+button.new_uuid {
   /* margin-top: 2em; */
   padding: 10px 50px;
   font-size: 16px;
   cursor: pointer;
+  color: aquamarine;
+  background-color: #101248;
   /* border-radius: 10px; */
   /* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; */
 }
