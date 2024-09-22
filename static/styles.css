@@ -6,7 +6,7 @@ body {
   height: 100vh;
   margin: 10px;
   padding: 1em;
-  background-color: #090414;
+  background-color: #252532;
 }
 
 h1.message {
@@ -58,7 +58,7 @@ button.new_uuid {
   font-size: 16px;
   cursor: pointer;
   color: aquamarine;
-  background-color: #101248;
+  background-color: #252532;
   /* border-radius: 10px; */
   /* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; */
 }
