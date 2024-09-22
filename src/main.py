@@ -82,7 +82,6 @@ async def read_root(request: Request):
 def generate_qr_code(cem_index=999):
     # Generate QR code with current timestamp
     qr = qrcode.QRCode(version=1, box_size=10, border=3.5)
-    # value = str(datetime.datetime.now()).split('.')[0]
     new_uuid = str(uuid.uuid4()).split('-')
     new_uuid[1] = f"{cem_index:04x}"
     random_uuid = "http://www.eternamente.digital/" + "-".join(new_uuid)
