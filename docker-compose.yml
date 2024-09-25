@@ -2,7 +2,8 @@
 services:
   app:
     container_name: qrCodeApp
-    image: vectorlab/fastapi-test-app:latest
+    # image: vectorlab/fastapi-test-app:latest
+    image: python3.10:latest
     build: .
     command: bash -c "uvicorn main:app --host 0.0.0.0 --port 5000 --reload"
     networks:
@@ -15,7 +16,7 @@ services:
     # volumes:
     #   - .:/app
     ports:
-      - 5000:5000
+      - 7000:5000
     environment:
       - USE_HTTPS=0
     restart: always
@@ -23,6 +24,6 @@ services:
 # This is only for deployied app
 networks:
   proxy_network:
-    name: nginxproxymanager_default
+    name: vlAppsNetwork
     # Change this to "true" when deploying
     external: false
