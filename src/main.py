@@ -11,6 +11,7 @@ import base64
 import random
 from dotenv import load_dotenv
 import os
+import sqlite3
 
 import datetime
 
@@ -57,28 +58,7 @@ templates.env.globals["url_for"] = https_url_for
 # else:
 #     templates.env.globals["https_url_for"] = url_for
 
-@app.get("/")
-async def read_root(request: Request):
-    value = str(datetime.datetime.now()).split('.')[0]
-    selected = random.choice(cemiterios)
-    pessoa = random.choice(pessoas)
-    cem_index = 999
-    if selected in cemiterios:
-        cem_index = cemiterios.index(selected)
-    else:
-        print(f'||| [{selected}] NOT IN LIST |||')
 
-    qr_code, uuid_value = generate_qr_code(cem_index)
-    return templates.TemplateResponse("index.html", {
-        "request": request,
-        "message": pessoa, 
-        "timeinfo": value,
-        "cemiterio": selected,
-        "qr_code": qr_code,
-        "uuid": uuid_value.split('.digital/')[1]
-    })
-
-# @app.get("/qr")
 def generate_qr_code(cem_index=999):
     # Generate QR code with current timestamp
     qr = qrcode.QRCode(version=1, box_size=10, border=3.5)
@@ -98,6 +78,53 @@ def generate_qr_code(cem_index=999):
     
     return encoded_img, random_uuid
 
+def procura_pessoa(IDPessoa):
+    conn = sqlite3.connect('./db/database.db')
+    cursor = conn.cursor()
+    cursor.execute(f"SELECT * FROM TBPessoas WHERE ID == '{IDPessoa}'")
+    res = cursor.fetchall()
+    conn.close()
+
+    return res
+
+def adiciona_pessoa(nome_pessoa, qrCodePessoa):
+    conn = sqlite3.connect('./db/database.db')
+    cursor = conn.cursor()
+    id_cemiterio = int(qrCodePessoa.split('-')[1], 16)
+    cursor.execute(f"INSERT INTO TBPessoas (ID, Nome, IDCemiterio) VALUES (?, ?, ?)", (qrCodePessoa, nome_pessoa, id_cemiterio))
+    conn.commit()
+    conn.close()
+
+
+@app.get("/")
+async def read_root(request: Request):
+    value = str(datetime.datetime.now()).split('.')[0]
+    selected = random.choice(cemiterios)
+    pessoa = random.choice(pessoas)
+    cem_index = 999
+    if selected in cemiterios:
+        cem_index = cemiterios.index(selected)
+    else:
+        print(f'||| [{selected}] NOT IN LIST |||')
+
+    qr_code, uuid_value = generate_qr_code(cem_index)
+
+    uuid_simples = uuid_value.split('.digital/')[1]
+
+    pessoaExist = len(procura_pessoa(uuid_simples))
+
+    if pessoaExist == 0:
+        adiciona_pessoa(pessoa, uuid_simples)
+
+    return templates.TemplateResponse("index.html", {
+        "request": request,
+        "message": pessoa, 
+        "timeinfo": value,
+        "cemiterio": selected,
+        "qr_code": qr_code,
+        "uuid": uuid_simples,
+        "existente": pessoaExist
+    })
 
 if __name__ == "__main__":
     PORT = 5000
