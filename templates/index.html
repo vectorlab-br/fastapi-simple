@@ -7,10 +7,11 @@
     <link href="{{ url_for(request, name='static', path='/styles.css') }}" rel="stylesheet">
 </head>
 <body>
-    <h1 class="message">{{ message }}</h1>
-    <h2 class="message">❤️ {{ cemiterio }} ❤️ </h1>
-    <!-- <p>This is a simple HTML template rendered by FastAPI.</p> -->
-    <h4>{{ timeinfo }} </h4>
+    <div class="container">
+      <h1 class="nome">{{ message }}</h1>
+      <h2 class="local">{{ cemiterio }}</h1>
+      <h4>.:{{ timeinfo }}:.</h4>
+    </div>
     <div class="container">
       <img src="data:image/png;base64,{{ qr_code }}" alt="QR Code with UUID">
       <p class="uuid">{{ uuid }}</p>

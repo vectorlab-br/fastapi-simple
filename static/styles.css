@@ -9,14 +9,14 @@ body {
   background-color: #252532;
 }
 
-h1.message {
-  color: #e5ff86;
+h1.nome {
+  color: #2fc4e9;
   font-size: 2.5em;
   /* height: auto; */
   margin: 0%;
 }
 
-h2.message {
+h2.local {
   color: #52d7e0;
 }
 
@@ -32,7 +32,7 @@ p {
 p.uuid {
   font-size: 1.25em;
   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-  color: #3cff00;
+  color: #a765f3;
 }
 
 .container {
